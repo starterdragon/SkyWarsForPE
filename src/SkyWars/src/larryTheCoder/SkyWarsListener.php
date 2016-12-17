@@ -10,6 +10,7 @@ use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\entity\EntityLevelChangeEvent;
 use pocketmine\event\inventory\InventoryPickupItemEvent;
+use pocketmine\event\player\PlayerJoinEvent;
 
 class SkyWarsListener implements Listener {
 
@@ -43,6 +44,10 @@ class SkyWarsListener implements Listener {
                 }
             }
         }
+    }
+    
+    public function onJoin(PlayerJoinEvent $e){
+        $e->getPlayer()->teleport($this->getServer()->getDefaultLevel()->getSpawnLocation());
     }
 
     public function onDropItem(PlayerDropItemEvent $ev) {
