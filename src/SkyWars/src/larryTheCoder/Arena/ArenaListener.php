@@ -157,7 +157,7 @@ class ArenaListener implements Listener {
      */
     public function onPlayerPickup(PlayerDropItemEvent $e) {
         $p = $e->getPlayer();
-        if ($this->arena->inArena($p) && $this->game === 0 || $this->plugin->cfg->get("allow_drop_item") === true) {
+        if ($this->arena->inArena($p) && $this->arena->game === 0 || $this->plugin->cfg->get("allow_drop_item") === true) {
             $e->setCancelled(true);
         }
     }
