@@ -17,6 +17,7 @@ use pocketmine\event\player\PlayerRespawnEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
+use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\player\PlayerCommandPreprocessEvent;
 use pocketmine\event\entity\EntityDamageByChildEntityEvent;
@@ -33,11 +34,23 @@ class ArenaListener implements Listener {
 
     /** @var Arena */
     private $arena;
-
+    
     public function __construct(SkyWarsAPI $plugin, Arena $arena) {
         $this->plugin = $plugin;
         $this->arena = $arena;
     }
+    
+    /**
+     * @param PlayerQuitEvent $e
+     * @priority MONITOR 
+     */
+    public function onPlayerQuit(PlayerQuitEvent $ev) {
+		$p = $ev->getPlayer();
+		if ($this->arena->inArena($p)) {
+			$this->plugin->getPlayerArena($p)->leaveArena($p);
+            return;
+        }
+	}
 
     /**
      * @param PlayerMoveEvent $e
