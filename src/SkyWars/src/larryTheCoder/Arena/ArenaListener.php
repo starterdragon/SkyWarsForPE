@@ -131,8 +131,10 @@ class ArenaListener implements Listener {
     public function onHit(EntityDamageEvent $e) {
         $entity = $e->getEntity();
 
-        $player = $entity instanceof Player;
-
+        $player = $entity instanceof Player;  
+        if (!$this->arena->inArena($e->getEntity())){
+			return true;
+		}
         if ($this->arena->fallTime !== 0) {
             $e->setCancelled(true);
             return;
